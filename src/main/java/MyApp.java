@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class MyApp implements DataConnection {
 
-    private static MyApp instance;
+    private static MyApp instance = null;
 
     private String year;
     private float lastCalculatedStatistics = 0;
@@ -54,14 +54,17 @@ public class MyApp implements DataConnection {
 
         for (int currentExploredYear = START_YEAR; currentExploredYear < END_YEAR; currentExploredYear++) {
 
-            success = instance.loadData(fromFile);
+            success = getInstance(currentExploredYear).loadData(fromFile);
 
             if (success) {
 
-                if (instance.lastCalculatedStatistics > 0) {
-                    System.out.println(currentExploredYear + " " + instance.lastCalculatedStatistics);
+                if (getInstance(currentExploredYear).lastCalculatedStatistics > 0) {
+                    System.out.println(
+                            currentExploredYear +
+                            " " +
+                            getInstance(currentExploredYear).lastCalculatedStatistics);
                 }
-                success = instance.saveData(toFile);
+                success = getInstance(currentExploredYear).saveData(toFile);
 
             }
 
